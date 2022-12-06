@@ -27,12 +27,13 @@ void main() {
         Stream.fromIterable([const User.anonymous()]),
       );
       when(() => AppInitMocks.appInitUseCase.execute()).thenAnswer((_) => successFuture(unit));
-
+      when(() => navigator.openLogin(any())).thenAnswer((_) => Future.value());
       // WHEN
       await presenter.onInit();
 
       // THEN
       verify(() => AppInitMocks.appInitUseCase.execute());
+      verify(() => navigator.openLogin(any()));
       verify(() => Mocks.userStore.stream);
     },
   );
